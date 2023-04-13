@@ -7,13 +7,13 @@ import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.guardian.repository.GuardianRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("tutores")
@@ -32,5 +32,15 @@ public class GuardianController {
 
         return ResponseEntity.created(uri).body(new GuardianCreatedDTO(guardian));
     }
+
+    @GetMapping
+    public ResponseEntity read(){
+        var guardians = guardianRepository.findAll();
+        if (guardians.isEmpty()){
+            return ResponseEntity.ok("Não encontrado");
+        }
+        return ResponseEntity.ok(guardians.stream().map(GuardianDetailsDTO::new).collect(Collectors.toList()));
+    }
+
 
 }
