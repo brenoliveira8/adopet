@@ -5,6 +5,7 @@ import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianCreatedDTO;
 import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.guardian.repository.GuardianRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -37,9 +38,19 @@ public class GuardianController {
     public ResponseEntity read(){
         var guardians = guardianRepository.findAll();
         if (guardians.isEmpty()){
-            return ResponseEntity.ok("Não encontrado");
+            return ResponseEntity.ok("Não encontrado.");
         }
         return ResponseEntity.ok(guardians.stream().map(GuardianDetailsDTO::new).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity readById(@PathVariable Long id){
+        try{
+            var guardian = guardianRepository.getReferenceById(id);
+            return ResponseEntity.ok(new GuardianDetailsDTO(guardian));
+        }catch (EntityNotFoundException exception){
+            return ResponseEntity.ok("Não encontrado.");
+        }
     }
 
 
