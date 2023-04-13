@@ -1,0 +1,5 @@
+spring:
+    datasource:
+        url: ${ADOPET_DATABASE_URL}
+        username: ${DATABASE_USERNAME}
+        password: ${DATABASE_PASSWORD}
