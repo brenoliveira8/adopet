@@ -1,6 +1,7 @@
 package br.com.mascarenhasb2.adopet.domain.guardian;
 
 import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianCreationDTO;
+import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianUpdateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,5 +27,12 @@ public class Guardian {
         this.city = newGuardian.city();
         this.about = newGuardian.about();
         this.photo = newGuardian.photo();
+    }
+    public void updateInformation(GuardianUpdateDTO newInformation) {
+        this.name = newInformation.name() != null ? newInformation.name() : this.name;
+        this.phone = newInformation.phone() != null ? newInformation.phone() : this.phone;
+        this.city = newInformation.city() != null ? newInformation.city() : this.city;
+        this.about = newInformation.about() != null ? newInformation.about() : this.about;
+        this.photo = newInformation.photo() != null ? newInformation.photo() : this.photo;
     }
 }
