@@ -41,7 +41,7 @@ public class GuardianController {
     public ResponseEntity read(){
         var guardians = guardianRepository.findAll();
         if (guardians.isEmpty()){
-            return ResponseEntity.ok("Não encontrado.");
+            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(guardians.stream().map(GuardianDetailsDTO::new).collect(Collectors.toList()));
     }
@@ -52,7 +52,7 @@ public class GuardianController {
             var guardian = guardianRepository.getReferenceById(id);
             return ResponseEntity.ok(new GuardianDetailsDTO(guardian));
         }catch (EntityNotFoundException exception){
-            return ResponseEntity.ok("Não encontrado.");
+            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -66,6 +66,16 @@ public class GuardianController {
         }catch (EntityNotFoundException exception){
             return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id){
+        if(guardianRepository.existsById(id)) {
+            guardianRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
     }
 
 }
