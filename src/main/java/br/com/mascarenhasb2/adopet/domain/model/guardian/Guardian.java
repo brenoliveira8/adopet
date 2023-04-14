@@ -1,7 +1,7 @@
-package br.com.mascarenhasb2.adopet.domain.guardian;
+package br.com.mascarenhasb2.adopet.domain.model.guardian;
 
-import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianCreationDTO;
-import br.com.mascarenhasb2.adopet.domain.guardian.dto.GuardianUpdateDTO;
+import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreationDTO;
+import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianUpdateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

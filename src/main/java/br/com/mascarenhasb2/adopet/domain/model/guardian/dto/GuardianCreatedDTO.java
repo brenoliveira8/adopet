@@ -1,6 +1,6 @@
-package br.com.mascarenhasb2.adopet.domain.guardian.dto;
+package br.com.mascarenhasb2.adopet.domain.model.guardian.dto;
 
-import br.com.mascarenhasb2.adopet.domain.guardian.Guardian;
+import br.com.mascarenhasb2.adopet.domain.model.guardian.Guardian;
 
 public record GuardianCreatedDTO(Long id, String name, String phone, String city) {
     public GuardianCreatedDTO(Guardian guardian){

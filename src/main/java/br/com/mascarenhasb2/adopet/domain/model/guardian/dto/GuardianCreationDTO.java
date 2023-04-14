@@ -1,4 +1,4 @@
-package br.com.mascarenhasb2.adopet.domain.guardian.dto;
+package br.com.mascarenhasb2.adopet.domain.model.guardian.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
