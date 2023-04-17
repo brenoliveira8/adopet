@@ -1,6 +1,7 @@
 package br.com.mascarenhasb2.adopet.domain.model.pet;
 
 import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetCreationDTO;
+import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetUpdateDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.Shelter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,5 +37,14 @@ public class Pet {
         this.adopted = false;
         this.photo = newPet.photo();
         this.shelter = shelter;
+    }
+    public void updateInformation(PetUpdateDTO pet, Shelter shelter) {
+        this.name = (pet.name() != null) ? pet.name() : this.name;
+        this.age = (pet.age() != null) ? pet.age() : this.age;
+        this.size = (pet.size() != null) ? pet.size() : this.size;
+        this.behavior = (pet.behavior() != null) ? pet.behavior() : this.behavior;
+        this.adopted = (pet.adopted() != null) ? pet.adopted() : this.adopted;
+        this.photo = (pet.photo() != null) ? pet.photo() : this.photo;
+        this.shelter = (shelter != null) ? shelter : this.shelter;
     }
 }
