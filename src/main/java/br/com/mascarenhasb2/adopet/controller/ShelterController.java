@@ -1,16 +1,10 @@
 package br.com.mascarenhasb2.adopet.controller;
 
-import br.com.mascarenhasb2.adopet.domain.model.guardian.Guardian;
-import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreatedDTO;
-import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianDetailsDTO;
-import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianUpdateDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.Shelter;
-import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreatedDTO;
+import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreationDTO;
-import br.com.mascarenhasb2.adopet.domain.repository.GuardianRepository;
 import br.com.mascarenhasb2.adopet.domain.repository.ShelterRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,17 +30,17 @@ public class ShelterController {
 
         var uri = uriBuilder.path("abrigos/{id}").buildAndExpand(shelter.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new ShelterCreatedDTO(shelter));
+        return ResponseEntity.created(uri).body(new ShelterDetailsDTO(shelter));
     }
 
-//    @GetMapping
-//    public ResponseEntity read(){
-//        var guardians = guardianRepository.findAll();
-//        if (guardians.isEmpty()){
-//            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
-//        }
-//        return ResponseEntity.ok(guardians.stream().map(GuardianDetailsDTO::new).collect(Collectors.toList()));
-//    }
+    @GetMapping
+    public ResponseEntity read(){
+        var shelters = shelterRepository.findAll();
+        if (shelters.isEmpty()){
+            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(shelters.stream().map(ShelterDetailsDTO::new).collect(Collectors.toList()));
+    }
 //
 //    @GetMapping("/{id}")
 //    public ResponseEntity readById(@PathVariable Long id){
