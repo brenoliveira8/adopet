@@ -4,6 +4,7 @@ import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.Shelter;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreationDTO;
+import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterUpdateDTO;
 import br.com.mascarenhasb2.adopet.domain.repository.ShelterRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -53,18 +54,18 @@ public class ShelterController {
         }
     }
 
-//    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
-//    @Transactional
-//    public ResponseEntity update(@RequestBody @Valid GuardianUpdateDTO guardianUpdateDTO){
-//        try{
-//            var guardian = guardianRepository.getReferenceById(guardianUpdateDTO.id());
-//            guardian.updateInformation(guardianUpdateDTO);
-//            return ResponseEntity.ok(new GuardianDetailsDTO(guardian));
-//        }catch (EntityNotFoundException exception){
-//            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @Transactional
+    public ResponseEntity update(@RequestBody @Valid ShelterUpdateDTO shelterUpdateDTO){
+        try{
+            var shelter = shelterRepository.getReferenceById(shelterUpdateDTO.id());
+            shelter.updateInformation(shelterUpdateDTO);
+            return ResponseEntity.ok(new ShelterDetailsDTO(shelter));
+        }catch (EntityNotFoundException exception){
+            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
+        }
+    }
+
 //    @DeleteMapping("/{id}")
 //    @Transactional
 //    public ResponseEntity delete(@PathVariable Long id){

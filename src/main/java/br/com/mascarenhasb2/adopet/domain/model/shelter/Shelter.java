@@ -2,6 +2,7 @@ package br.com.mascarenhasb2.adopet.domain.model.shelter;
 
 import br.com.mascarenhasb2.adopet.domain.model.address.Address;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreationDTO;
+import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterUpdateDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,5 +29,11 @@ public class Shelter {
         this.name = newShelter.name();
         this.phone = newShelter.phone();
         this.address = new Address(newShelter.address());
+    }
+    public void updateInformation(ShelterUpdateDTO shelter) {
+        this.name = (shelter.name() != null) ? shelter.name() : this.name;
+        this.phone = (shelter.phone() != null) ? shelter.phone() : this.phone;
+        if(shelter.address() != null)
+            this.address.updateInformation(shelter.address());
     }
 }
