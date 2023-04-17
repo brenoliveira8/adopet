@@ -1,5 +1,6 @@
 package br.com.mascarenhasb2.adopet.domain.model.address;
 
+import br.com.mascarenhasb2.adopet.domain.model.address.dto.AddressDTO;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,13 @@ public class Address {
     private String state;
     private String complement;
 
+    public Address(AddressDTO newAddress) {
+        this.street = newAddress.street();
+        this.number = newAddress.number();
+        this.neighborhood = newAddress.neighborhood();
+        this.zipCode = newAddress.zipCode();
+        this.city = newAddress.city();
+        this.state = newAddress.state();
+        this.complement = newAddress.complement();
+    }
 }
