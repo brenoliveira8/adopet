@@ -66,14 +66,14 @@ public class ShelterController {
         }
     }
 
-//    @DeleteMapping("/{id}")
-//    @Transactional
-//    public ResponseEntity delete(@PathVariable Long id){
-//        if(guardianRepository.existsById(id)) {
-//            guardianRepository.deleteById(id);
-//            return ResponseEntity.noContent().build();
-//        }
-//        return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
-//    }
-//
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id){
+        if(shelterRepository.existsById(id)) {
+            shelterRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
+    }
+
 }

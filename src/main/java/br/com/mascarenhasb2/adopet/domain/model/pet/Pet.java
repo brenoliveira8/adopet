@@ -1,5 +1,6 @@
 package br.com.mascarenhasb2.adopet.domain.model.pet;
 
+import br.com.mascarenhasb2.adopet.domain.model.shelter.Shelter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class Pet {
     private String size;
     private String behavior;
     private String city;
+    private Shelter shelter;
 
 
 }
