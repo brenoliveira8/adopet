@@ -69,15 +69,15 @@ public class PetController {
             return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
         }
     }
-//
-//    @DeleteMapping("/{id}")
-//    @Transactional
-//    public ResponseEntity delete(@PathVariable Long id){
-//        if(shelterRepository.existsById(id)) {
-//            shelterRepository.deleteById(id);
-//            return ResponseEntity.noContent().build();
-//        }
-//        return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
-//    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id){
+        if(petRepository.existsById(id)) {
+            petRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
+    }
 
 }
