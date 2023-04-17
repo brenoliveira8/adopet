@@ -47,4 +47,7 @@ public class Pet {
         this.photo = (pet.photo() != null) ? pet.photo() : this.photo;
         this.shelter = (shelter != null) ? shelter : this.shelter;
     }
+    public void adopt() {
+        this.adopted = true;
+    }
 }
