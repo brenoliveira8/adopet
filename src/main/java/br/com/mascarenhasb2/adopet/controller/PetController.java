@@ -18,7 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("pets")
+@RequestMapping ("pets")
 public class PetController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class PetController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody @Valid PetCreationDTO petCreationDTO, UriComponentsBuilder uriBuilder){
+    public ResponseEntity create(@RequestBody @Valid PetCreationDTO petCreationDTO, UriComponentsBuilder uriBuilder) {
         var shelter = shelterRepository.getReferenceById(petCreationDTO.shelterId());
         Pet pet = new Pet(petCreationDTO, shelter);
         petRepository.save(pet);
@@ -39,41 +39,41 @@ public class PetController {
     }
 
     @GetMapping
-    public ResponseEntity read(){
-        var pets = petRepository.findAll();
-        if (pets.isEmpty()){
+    public ResponseEntity read() {
+        var pets = petRepository.findAllByAdoptedFalse();
+        if (pets.isEmpty()) {
             return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(pets.stream().map(PetDetailsDTO::new).collect(Collectors.toList()));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity readById(@PathVariable Long id){
-        try{
+    @GetMapping ("/{id}")
+    public ResponseEntity readById(@PathVariable Long id) {
+        try {
             var pet = petRepository.getReferenceById(id);
             return ResponseEntity.ok(new PetDetailsDTO(pet));
-        }catch (EntityNotFoundException exception){
+        } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping (method = {RequestMethod.PUT, RequestMethod.PATCH})
     @Transactional
-    public ResponseEntity update(@RequestBody @Valid PetUpdateDTO petUpdateDTO){
-        try{
+    public ResponseEntity update(@RequestBody @Valid PetUpdateDTO petUpdateDTO) {
+        try {
             var pet = petRepository.getReferenceById(petUpdateDTO.id());
             var shelter = shelterRepository.getReferenceById(pet.getId());
             pet.updateInformation(petUpdateDTO, shelter);
             return ResponseEntity.ok(new PetDetailsDTO(pet));
-        }catch (EntityNotFoundException exception){
+        } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping ("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
-        if(petRepository.existsById(id)) {
+    public ResponseEntity delete(@PathVariable Long id) {
+        if (petRepository.existsById(id)) {
             petRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }
