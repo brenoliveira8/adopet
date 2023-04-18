@@ -2,6 +2,7 @@ package br.com.mascarenhasb2.adopet.domain.model.guardian;
 
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianUpdateDTO;
+import br.com.mascarenhasb2.adopet.domain.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,12 +22,16 @@ public class Guardian {
     private String city;
     private String about;
     private String photo;
-    public Guardian(GuardianCreationDTO newGuardian) {
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+    public Guardian(GuardianCreationDTO newGuardian, User user) {
         this.name = newGuardian.name();
         this.phone = newGuardian.phone();
         this.city = newGuardian.city();
         this.about = newGuardian.about();
         this.photo = newGuardian.photo();
+        this.user = user;
     }
     public void updateInformation(GuardianUpdateDTO newInformation) {
         this.name = newInformation.name() != null ? newInformation.name() : this.name;

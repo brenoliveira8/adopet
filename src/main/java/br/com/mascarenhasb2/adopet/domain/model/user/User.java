@@ -27,6 +27,11 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    public User(String email, String encodedPassword, Role role) {
+        this.email = email;
+        this.password = encodedPassword;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

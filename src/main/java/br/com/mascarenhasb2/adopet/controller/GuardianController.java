@@ -5,12 +5,16 @@ import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreatedDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianUpdateDTO;
+import br.com.mascarenhasb2.adopet.domain.model.user.Role;
+import br.com.mascarenhasb2.adopet.domain.model.user.User;
 import br.com.mascarenhasb2.adopet.domain.repository.GuardianRepository;
+import br.com.mascarenhasb2.adopet.domain.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,16 +27,25 @@ public class GuardianController {
 
     @Autowired
     private GuardianRepository guardianRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping
     @Transactional
     public ResponseEntity create(@RequestBody @Valid GuardianCreationDTO guardianCreationDTO, UriComponentsBuilder uriBuilder){
-        Guardian guardian = new Guardian(guardianCreationDTO);
+        String encodedPassword = encodePassword(guardianCreationDTO.password());
+        User user = new User(guardianCreationDTO.email(), encodedPassword, Role.GUARDIAN);
+        userRepository.save(user);
+        Guardian guardian = new Guardian(guardianCreationDTO, user);
         guardianRepository.save(guardian);
 
         var uri = uriBuilder.path("tutores/{id}").buildAndExpand(guardian.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new GuardianCreatedDTO(guardian));
+    }
+    private String encodePassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
     }
 
     @GetMapping

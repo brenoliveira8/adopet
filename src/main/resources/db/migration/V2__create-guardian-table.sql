@@ -5,6 +5,8 @@ CREATE TABLE guardians(
     city VARCHAR(255) NOT NULL,
     about TEXT,
     photo VARCHAR(255),
+    user_id BIGINT NOT NULL,
 
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
