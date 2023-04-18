@@ -15,6 +15,7 @@ import java.util.List;
 
 @Entity(name = "User")
 @Table(name = "users")
+@Embeddable
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

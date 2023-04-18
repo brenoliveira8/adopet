@@ -5,12 +5,16 @@ import br.com.mascarenhasb2.adopet.domain.model.shelter.Shelter;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterUpdateDTO;
+import br.com.mascarenhasb2.adopet.domain.model.user.Role;
+import br.com.mascarenhasb2.adopet.domain.model.user.User;
 import br.com.mascarenhasb2.adopet.domain.repository.ShelterRepository;
+import br.com.mascarenhasb2.adopet.domain.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,15 +28,30 @@ public class ShelterController {
     @Autowired
     private ShelterRepository shelterRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping
     @Transactional
     public ResponseEntity create(@RequestBody @Valid ShelterCreationDTO shelterCreationDTO, UriComponentsBuilder uriBuilder){
-        Shelter shelter = new Shelter(shelterCreationDTO);
+        if (userRepository.existsByEmail(shelterCreationDTO.user().email())){
+            return new ResponseEntity<>("E-mail já existe.", HttpStatus.CONFLICT);
+        }
+
+        String encodedPassword = encodePassword(shelterCreationDTO.user().password());
+        User user = new User(shelterCreationDTO.user().email(),encodedPassword, Role.SHELTER);
+        userRepository.save(user);
+        Shelter shelter = new Shelter(shelterCreationDTO,user);
         shelterRepository.save(shelter);
 
         var uri = uriBuilder.path("abrigos/{id}").buildAndExpand(shelter.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new ShelterDetailsDTO(shelter));
+    }
+
+    private String encodePassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
     }
 
     @GetMapping

@@ -9,6 +9,8 @@ CREATE TABLE shelters(
     city VARCHAR(255) NOT NULL,
     state VARCHAR(2) NOT NULL,
     complement VARCHAR(255),
+    user_id BIGINT NOT NULL,
 
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );

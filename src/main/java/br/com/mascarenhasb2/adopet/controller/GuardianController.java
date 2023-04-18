@@ -33,8 +33,12 @@ public class GuardianController {
     @PostMapping
     @Transactional
     public ResponseEntity create(@RequestBody @Valid GuardianCreationDTO guardianCreationDTO, UriComponentsBuilder uriBuilder){
-        String encodedPassword = encodePassword(guardianCreationDTO.password());
-        User user = new User(guardianCreationDTO.email(), encodedPassword, Role.GUARDIAN);
+        if (userRepository.existsByEmail(guardianCreationDTO.user().email())){
+            return new ResponseEntity<>("E-mail já existe.", HttpStatus.CONFLICT);
+        }
+
+        String encodedPassword = encodePassword(guardianCreationDTO.user().password());
+        User user = new User(guardianCreationDTO.user().email(), encodedPassword, Role.GUARDIAN);
         userRepository.save(user);
         Guardian guardian = new Guardian(guardianCreationDTO, user);
         guardianRepository.save(guardian);
