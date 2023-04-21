@@ -2,7 +2,7 @@ package br.com.mascarenhasb2.adopet.controller;
 
 import br.com.mascarenhasb2.adopet.domain.model.user.User;
 import br.com.mascarenhasb2.adopet.domain.model.user.dto.UserDTO;
-import br.com.mascarenhasb2.adopet.domain.model.user.dto.jwtTokenDTO;
+import br.com.mascarenhasb2.adopet.domain.model.user.dto.JwtTokenDTO;
 import br.com.mascarenhasb2.adopet.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,11 @@ public class LoginController {
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid UserDTO userDTO){
         var authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.email(), userDTO.password());
-        System.out.println(authenticationToken);
         try {
             var authentication = manager.authenticate(authenticationToken);
             var jwtToken = tokenService.generateToken((User) authentication.getPrincipal());
 
-            return ResponseEntity.ok(new jwtTokenDTO(jwtToken));
+            return ResponseEntity.ok(new JwtTokenDTO(jwtToken));
         } catch (AuthenticationException exception){
             return new ResponseEntity<>("Login ou senha inválidos", HttpStatus.UNAUTHORIZED);
         }

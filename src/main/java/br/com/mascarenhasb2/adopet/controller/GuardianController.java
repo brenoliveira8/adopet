@@ -1,6 +1,7 @@
 package br.com.mascarenhasb2.adopet.controller;
 
 import br.com.mascarenhasb2.adopet.domain.model.guardian.Guardian;
+import br.com.mascarenhasb2.adopet.domain.model.guardian.GuardianService;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreatedDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianDetailsDTO;
@@ -9,6 +10,7 @@ import br.com.mascarenhasb2.adopet.domain.model.user.Role;
 import br.com.mascarenhasb2.adopet.domain.model.user.User;
 import br.com.mascarenhasb2.adopet.domain.repository.GuardianRepository;
 import br.com.mascarenhasb2.adopet.domain.repository.UserRepository;
+import br.com.mascarenhasb2.adopet.infra.exception.EmailConflictException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,34 +32,20 @@ public class GuardianController {
     private GuardianRepository guardianRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GuardianService service;
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody @Valid GuardianCreationDTO guardianCreationDTO, UriComponentsBuilder uriBuilder){
-        if (userRepository.existsByEmail(guardianCreationDTO.user().email())){
-            return new ResponseEntity<>("E-mail já existe.", HttpStatus.CONFLICT);
-        }
-
-        String encodedPassword = encodePassword(guardianCreationDTO.user().password());
-        User user = new User(guardianCreationDTO.user().email(), encodedPassword, Role.GUARDIAN);
-        userRepository.save(user);
-        Guardian guardian = new Guardian(guardianCreationDTO, user);
-        guardianRepository.save(guardian);
-
-        var uri = uriBuilder.path("tutores/{id}").buildAndExpand(guardian.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new GuardianCreatedDTO(guardian));
-    }
-    private String encodePassword(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(password);
+    public ResponseEntity<GuardianCreatedDTO> create(@RequestBody @Valid GuardianCreationDTO guardianCreationDTO, UriComponentsBuilder uriBuilder){
+        return service.create(guardianCreationDTO, uriBuilder);
     }
 
     @GetMapping
-    public ResponseEntity read(){
+    public ResponseEntity<List<GuardianDetailsDTO>> read(){
         var guardians = guardianRepository.findAll();
         if (guardians.isEmpty()){
-            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(guardians.stream().map(GuardianDetailsDTO::new).collect(Collectors.toList()));
     }

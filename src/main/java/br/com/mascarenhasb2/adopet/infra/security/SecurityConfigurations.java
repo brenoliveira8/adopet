@@ -23,11 +23,10 @@ public class SecurityConfigurations{
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
         return http.csrf().disable()
-//                .authorizeHttpRequests().anyRequest().permitAll().and().build();
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/adocao").hasRole("SHELTER")
+                .requestMatchers(HttpMethod.DELETE, "/adocao/**").hasAnyRole("SHELTER", "ADMIN")
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

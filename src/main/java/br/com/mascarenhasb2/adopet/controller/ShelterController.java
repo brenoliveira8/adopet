@@ -1,14 +1,14 @@
 package br.com.mascarenhasb2.adopet.controller;
 
-import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.Shelter;
-import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreationDTO;
+import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterUpdateDTO;
 import br.com.mascarenhasb2.adopet.domain.model.user.Role;
 import br.com.mascarenhasb2.adopet.domain.model.user.User;
 import br.com.mascarenhasb2.adopet.domain.repository.ShelterRepository;
 import br.com.mascarenhasb2.adopet.domain.repository.UserRepository;
+import br.com.mascarenhasb2.adopet.infra.exception.EmailConflictException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class ShelterController {
     @Transactional
     public ResponseEntity create(@RequestBody @Valid ShelterCreationDTO shelterCreationDTO, UriComponentsBuilder uriBuilder){
         if (userRepository.existsByEmail(shelterCreationDTO.user().email())){
-            return new ResponseEntity<>("E-mail já existe.", HttpStatus.CONFLICT);
+            throw new EmailConflictException("E-mail já cadastrado no sistema!");
         }
 
         String encodedPassword = encodePassword(shelterCreationDTO.user().password());

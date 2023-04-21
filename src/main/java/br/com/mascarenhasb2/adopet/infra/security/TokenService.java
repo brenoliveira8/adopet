@@ -25,6 +25,7 @@ public class TokenService {
                     .withIssuer("Adopet API")
                     .withSubject(user.getEmail())
                     .withExpiresAt(expireDate())
+                    .withClaim("role", String.valueOf(user.getRole()))
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Generating token error.", exception);

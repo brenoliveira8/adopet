@@ -1,11 +1,9 @@
 package br.com.mascarenhasb2.adopet.domain.model.adoption.dto;
 
 import br.com.mascarenhasb2.adopet.domain.model.adoption.Adoption;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.springframework.core.annotation.AliasFor;
 
 import java.time.LocalDateTime;
 
