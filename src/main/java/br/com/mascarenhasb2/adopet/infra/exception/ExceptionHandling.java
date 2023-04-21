@@ -18,7 +18,7 @@ public class ExceptionHandling {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException exception){
+    public ResponseEntity<ErrorDTO> handleEntityNotFound(){
         return ResponseEntity
                 .notFound()
                 .build();

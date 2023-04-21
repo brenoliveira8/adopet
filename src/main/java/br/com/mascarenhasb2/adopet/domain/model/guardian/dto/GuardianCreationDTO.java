@@ -1,5 +1,6 @@
 package br.com.mascarenhasb2.adopet.domain.model.guardian.dto;
 
+import br.com.mascarenhasb2.adopet.domain.model.ReturnInformationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.user.dto.UserDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -15,5 +16,5 @@ public record GuardianCreationDTO(
         UserDTO user,
         String about,
         String photo
-) {
+){
 }
