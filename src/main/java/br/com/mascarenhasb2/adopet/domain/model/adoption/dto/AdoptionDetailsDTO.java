@@ -1,5 +1,6 @@
 package br.com.mascarenhasb2.adopet.domain.model.adoption.dto;
 
+import br.com.mascarenhasb2.adopet.domain.model.ReturnInformationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.adoption.Adoption;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,14 +12,14 @@ import java.time.LocalDateTime;
 public record AdoptionDetailsDTO(
         Long id,
         @JsonProperty("tutor")
-        Long guardianId,
+        String guardian,
         @JsonProperty("animal")
-        Long petId,
+        String pet,
         @JsonProperty("data")
         @JsonFormat (pattern = "dd/MM/yyyy - HH:mm")
         LocalDateTime adoptionDate
-) {
+) implements ReturnInformationDTO {
     public AdoptionDetailsDTO(Adoption adoption) {
-        this(adoption.getId(), adoption.getGuardian().getId(), adoption.getPet().getId(), adoption.getAdoptionDate());
+        this(adoption.getId(), adoption.getGuardian().getName(), adoption.getPet().getName(), adoption.getAdoptionDate());
     }
 }

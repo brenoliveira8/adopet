@@ -38,16 +38,15 @@ public class Pet {
         this.photo = newPet.photo();
         this.shelter = shelter;
     }
-    public void updateInformation(PetUpdateDTO pet, Shelter shelter) {
+    public void updateInformation(PetUpdateDTO pet) {
         this.name = (pet.name() != null) ? pet.name() : this.name;
         this.age = (pet.age() != null) ? pet.age() : this.age;
         this.size = (pet.size() != null) ? pet.size() : this.size;
         this.behavior = (pet.behavior() != null) ? pet.behavior() : this.behavior;
         this.adopted = (pet.adopted() != null) ? pet.adopted() : this.adopted;
         this.photo = (pet.photo() != null) ? pet.photo() : this.photo;
-        this.shelter = (shelter != null) ? shelter : this.shelter;
     }
-    public void adopt() {
-        this.adopted = true;
+    public void adopt(Boolean newState) {
+        this.adopted = newState;
     }
 }

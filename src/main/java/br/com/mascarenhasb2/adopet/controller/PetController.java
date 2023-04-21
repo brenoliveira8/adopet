@@ -32,7 +32,7 @@ public class PetController {
 
     @GetMapping ("/{id}")
     public ResponseEntity<SingleResponseDTO> readById(@PathVariable Long id) {
-        return petService.reaPetById(id);
+        return petService.readPetById(id);
     }
 
     @RequestMapping (method = {RequestMethod.PUT, RequestMethod.PATCH})

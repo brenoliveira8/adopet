@@ -17,6 +17,14 @@ public class ExceptionHandling {
                 .body(error);
     }
 
+    @ExceptionHandler(PetAlreadyAdoptedException.class)
+    public ResponseEntity<ErrorDTO> handlePetAlreadyAdopted(PetAlreadyAdoptedException exception){
+        var error = new ErrorDTO(String.valueOf(HttpStatus.CONFLICT.value()), exception.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(error);
+    }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorDTO> handleEntityNotFound(){
         return ResponseEntity

@@ -36,7 +36,7 @@ public class PetService {
     }
 
     public ResponseEntity<ListResponseDTO> readAllPets() {
-        var pets = petRepository.findAll();
+        var pets = petRepository.findAllByAdoptedFalse();
         if (pets.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -50,7 +50,7 @@ public class PetService {
         return ResponseEntity.ok(listOfPets);
     }
 
-    public ResponseEntity<SingleResponseDTO> reaPetById(Long id) {
+    public ResponseEntity<SingleResponseDTO> readPetById(Long id) {
         try {
             var pet = petRepository.getReferenceById(id);
             return ResponseEntity.ok(createSingleResponseDTO(HttpStatus.OK, pet));
@@ -62,8 +62,7 @@ public class PetService {
     public ResponseEntity<SingleResponseDTO> updatePet(PetUpdateDTO petUpdateDTO) {
         try {
             var pet = petRepository.getReferenceById(petUpdateDTO.id());
-            var shelter = shelterRepository.getReferenceById(pet.getId());
-            pet.updateInformation(petUpdateDTO, shelter);
+            pet.updateInformation(petUpdateDTO);
             return ResponseEntity.ok(createSingleResponseDTO(HttpStatus.OK, pet));
         } catch (EntityNotFoundException exception) {
             throw new EntityNotFoundException();

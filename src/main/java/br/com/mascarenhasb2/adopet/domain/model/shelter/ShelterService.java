@@ -30,7 +30,7 @@ public class ShelterService {
         EmailUtil.verifyIfExists(userRepository, shelterCreationDTO.user().email());
         String encodedPassword = PasswordUtil.encode(shelterCreationDTO.user().password());
 
-        User user = new User(shelterCreationDTO.user().email(), encodedPassword, Role.GUARDIAN);
+        User user = new User(shelterCreationDTO.user().email(), encodedPassword, Role.SHELTER);
         userRepository.save(user);
         Shelter shelter = new Shelter(shelterCreationDTO, user);
         shelterRepository.save(shelter);

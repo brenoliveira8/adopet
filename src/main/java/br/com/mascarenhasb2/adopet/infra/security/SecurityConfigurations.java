@@ -26,8 +26,10 @@ public class SecurityConfigurations{
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/adocao/**").hasAnyRole("SHELTER", "ADMIN")
-                .anyRequest().authenticated()
+                .requestMatchers(HttpMethod.POST, "/tutores").permitAll()
+                .requestMatchers(HttpMethod.POST, "/abrigos").permitAll()
+                .requestMatchers(request -> request.getMethod().equals("GET") && request.getServletPath().startsWith("/pets")).permitAll()
+                .anyRequest().hasAnyRole("SHELTER", "ADMIN")
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
