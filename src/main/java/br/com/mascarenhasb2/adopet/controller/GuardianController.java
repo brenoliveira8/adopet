@@ -43,21 +43,12 @@ public class GuardianController {
 
     @GetMapping
     public ResponseEntity<List<GuardianDetailsDTO>> read(){
-        var guardians = guardianRepository.findAll();
-        if (guardians.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(guardians.stream().map(GuardianDetailsDTO::new).collect(Collectors.toList()));
+        return service.read();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity readById(@PathVariable Long id){
-        try{
-            var guardian = guardianRepository.getReferenceById(id);
-            return ResponseEntity.ok(new GuardianDetailsDTO(guardian));
-        }catch (EntityNotFoundException exception){
-            return new ResponseEntity<>("Não encontrado.", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<GuardianDetailsDTO> readById(@PathVariable Long id){
+        return service.readById(id);
     }
 
     @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
