@@ -2,14 +2,9 @@ package br.com.mascarenhasb2.adopet.domain.model.adoption;
 
 import br.com.mascarenhasb2.adopet.domain.model.adoption.dto.AdoptionCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.adoption.dto.AdoptionDetailsDTO;
-import br.com.mascarenhasb2.adopet.domain.model.pet.Pet;
-import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetCreationDTO;
-import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetDetailsDTO;
-import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetUpdateDTO;
 import br.com.mascarenhasb2.adopet.domain.repository.AdoptionRepository;
 import br.com.mascarenhasb2.adopet.domain.repository.GuardianRepository;
 import br.com.mascarenhasb2.adopet.domain.repository.PetRepository;
-import br.com.mascarenhasb2.adopet.domain.repository.ShelterRepository;
 import br.com.mascarenhasb2.adopet.infra.exception.PetAlreadyAdoptedException;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;

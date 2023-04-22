@@ -1,10 +1,10 @@
 package br.com.mascarenhasb2.adopet.infra.security;
 
 import br.com.mascarenhasb2.adopet.domain.model.user.User;
+import br.com.mascarenhasb2.adopet.infra.exception.InvalidJwtToken;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class TokenService {
                     .withClaim("role", String.valueOf(user.getRole()))
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Generating token error.", exception);
+            throw new JWTCreationException("Erro gerando o Token", exception);
         }
     }
 
@@ -41,7 +41,7 @@ public class TokenService {
                     .verify(jwtToken)
                     .getSubject();
         } catch (JWTVerificationException exception){
-            throw new RuntimeException("Invalid JWT Token.");
+            throw new InvalidJwtToken("Token JWT inválido.");
         }
     }
     private Instant expireDate() {

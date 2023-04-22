@@ -1,12 +1,12 @@
 package br.com.mascarenhasb2.adopet.controller;
 
 import br.com.mascarenhasb2.adopet.domain.model.user.User;
-import br.com.mascarenhasb2.adopet.domain.model.user.dto.UserDTO;
 import br.com.mascarenhasb2.adopet.domain.model.user.dto.JwtTokenDTO;
+import br.com.mascarenhasb2.adopet.domain.model.user.dto.UserDTO;
 import br.com.mascarenhasb2.adopet.infra.security.TokenService;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +25,7 @@ public class LoginController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody @Valid UserDTO userDTO){
+    public ResponseEntity<JwtTokenDTO> login(@RequestBody @Valid UserDTO userDTO){
         var authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.email(), userDTO.password());
         try {
             var authentication = manager.authenticate(authenticationToken);
@@ -33,7 +33,7 @@ public class LoginController {
 
             return ResponseEntity.ok(new JwtTokenDTO(jwtToken));
         } catch (AuthenticationException exception){
-            return new ResponseEntity<>("Login ou senha inválidos", HttpStatus.UNAUTHORIZED);
+            throw new ValidationException();
         }
     }
 }
