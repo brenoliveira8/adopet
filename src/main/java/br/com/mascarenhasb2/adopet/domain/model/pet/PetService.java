@@ -10,10 +10,15 @@ import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;
 import br.com.mascarenhasb2.adopet.util.URIUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Collections;
 
 @Service
 public class PetService {
@@ -35,8 +40,8 @@ public class PetService {
         }
     }
 
-    public ResponseEntity<ListResponseDTO> readAllPets() {
-        var pets = petRepository.findAllByAdoptedFalse();
+    public ResponseEntity<Page<ListResponseDTO>> readAllPetsNonAdoptedPetsPaginated(Pageable pageable) {
+        var pets = petRepository.findAllByAdoptedFalse(pageable);
         if (pets.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -47,7 +52,7 @@ public class PetService {
                 pets.stream().map(PetDetailsDTO::new).toList()
         );
 
-        return ResponseEntity.ok(listOfPets);
+        return ResponseEntity.ok(new PageImpl<>(Collections.singletonList(listOfPets), pageable, pets.getTotalElements()));
     }
 
     public ResponseEntity<SingleResponseDTO> readPetById(Long id) {

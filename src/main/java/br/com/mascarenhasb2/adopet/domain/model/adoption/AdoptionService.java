@@ -11,10 +11,15 @@ import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;
 import br.com.mascarenhasb2.adopet.util.URIUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Collections;
 
 @Service
 public class AdoptionService {
@@ -43,8 +48,8 @@ public class AdoptionService {
         }
     }
 
-    public ResponseEntity<ListResponseDTO> readAllAdoptions() {
-        var adoptions = adoptionRepository.findAll();
+    public ResponseEntity<Page<ListResponseDTO>> readAllAdoptionsPaginated(Pageable pageable) {
+        var adoptions = adoptionRepository.findAll(pageable);
         if (adoptions.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -55,7 +60,7 @@ public class AdoptionService {
                 adoptions.stream().map(AdoptionDetailsDTO::new).toList()
         );
 
-        return ResponseEntity.ok(listOfAdoptions);
+        return ResponseEntity.ok(new PageImpl<>(Collections.singletonList(listOfAdoptions), pageable, adoptions.getTotalElements()));
     }
 
     public ResponseEntity<SingleResponseDTO> readAdoptionById(Long id) {

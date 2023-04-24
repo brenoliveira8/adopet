@@ -6,6 +6,9 @@ import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +27,8 @@ public class AdoptionController {
     }
 
     @GetMapping
-    public ResponseEntity<ListResponseDTO> read() {
-        return adoptionService.readAllAdoptions();
+    public ResponseEntity<Page<ListResponseDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"})Pageable pageable) {
+        return adoptionService.readAllAdoptionsPaginated(pageable);
     }
 
     @GetMapping ("/{id}")
