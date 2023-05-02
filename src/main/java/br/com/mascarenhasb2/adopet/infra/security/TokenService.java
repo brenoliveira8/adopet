@@ -1,10 +1,12 @@
 package br.com.mascarenhasb2.adopet.infra.security;
 
 import br.com.mascarenhasb2.adopet.domain.model.user.User;
-import br.com.mascarenhasb2.adopet.infra.exception.InvalidJwtToken;
+import br.com.mascarenhasb2.adopet.infra.exception.InvalidJwtTokenException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.*;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class TokenService {
         }
     }
 
-    public String getSubject(String jwtToken) {
+    public String getSubject(String jwtToken){
         try {
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
@@ -40,8 +42,10 @@ public class TokenService {
                     .build()
                     .verify(jwtToken)
                     .getSubject();
-        } catch (JWTVerificationException exception){
-            throw new InvalidJwtToken("Token JWT inválido.");
+        } catch (TokenExpiredException exception) {
+            throw new InvalidJwtTokenException("Token expirado.");
+        } catch (JWTVerificationException exception) {
+            throw new InvalidJwtTokenException("Token inválido");
         }
     }
     private Instant expireDate() {

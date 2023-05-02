@@ -15,9 +15,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfigurations{
+public class SecurityConfiguration{
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http, SecurityFilter securityFilter) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityFilter securityFilter, CustomAuthenticationEntryPoint authenticationEntryPoint) throws Exception {
         return http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
@@ -26,17 +26,18 @@ public class SecurityConfigurations{
                 .requestMatchers(HttpMethod.POST, "/abrigos").permitAll()
                 .requestMatchers(request -> request.getMethod().equals("GET") && request.getServletPath().startsWith("/pets")).permitAll()
                 .anyRequest().hasAnyRole("SHELTER", "ADMIN")
+                .and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

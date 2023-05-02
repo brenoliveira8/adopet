@@ -29,7 +29,7 @@ public class PetController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ListResponseDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"})Pageable pageable) {
+    public ResponseEntity<Page<ListResponseDTO>> read(@PageableDefault (size = 10, page = 0, sort = {"id"}) Pageable pageable) {
         return petService.readAllPetsNonAdoptedPetsPaginated(pageable);
     }
 

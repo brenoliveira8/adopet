@@ -1,6 +1,7 @@
 package br.com.mascarenhasb2.adopet.infra.security;
 
 import br.com.mascarenhasb2.adopet.domain.repository.UserRepository;
+import br.com.mascarenhasb2.adopet.infra.exception.InvalidJwtTokenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,22 +22,21 @@ public class SecurityFilter extends OncePerRequestFilter {
     private TokenService tokenService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, InvalidJwtTokenException {
         var jwtToken = retrieveToken(request);
-        if (jwtToken != null){
+        if (jwtToken != null) {
             var subject = tokenService.getSubject(jwtToken);
             var user = userRepository.findByEmail(subject);
-
-            var authentication = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
     private String retrieveToken(HttpServletRequest request) {
         var authorizationHeader = request.getHeader("Authorization");
-        if(authorizationHeader != null){
-            return authorizationHeader.replace("Bearer ","");
+        if (authorizationHeader != null) {
+            return authorizationHeader.replace("Bearer ", "");
         }
         return null;
     }
