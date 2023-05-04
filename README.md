@@ -1,3 +1,5 @@
+_Portuguese Version_
+
 # 🐾 ADOPET - 6º Challenge Back-end Alura 🐾
 
 ![](https://github.com/brenoliveira8/adopet/blob/main/adopet-page.png?raw=true)
@@ -26,7 +28,7 @@ O meu objetivo principal é testar as minhas habilidades em Java com Spring Boot
 - [x] CRUD de pets
 - [x] Adoção de pets
 - [x] Autenticação/Autorização
-- [x] Testes de unidade 
+- [ ] Testes de unidade 🚧 (em desenvolvimento)
 - [ ] Testes de integração
 - [ ] Integração com front-end
 - [ ] Deploy da aplicação
@@ -58,14 +60,90 @@ O meu objetivo principal é testar as minhas habilidades em Java com Spring Boot
 
 5. Rode o projeto `AdopetApplication.class`
 
+6. Você também pode executar os testes com o Postman na sua máquina, a Collection com os testes que realizei está no arquivo `Adopet.postman_collection`
+
 ### 🤝 Contribuição
 
 Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir uma [issue](https://github.com/brenoliveira8/adopet/issues) ou enviar um [pull request](https://github.com/brenoliveira8/adopet/pulls).
 
 ### 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
 
-Feito por Breno Mascarenhas 🤓.
+_English Version_
+
+# 🐾 ADOPET - 6th Alura Back-end Challenge 🐾
+
+![](https://github.com/brenoliveira8/adopet/blob/main/adopet-page.png?raw=true)
+
+### 📝 About
+This project was developed as part of the [Alura](https://www.alura.com.br/) Back-end Challenge and aims to implement the back-end for a pet adoption application, called ADOPET (fictional company).
+
+_"After some prototypes testing by a UX/UI team, the first version of Adopet was requested, a platform to connect people who wish to adopt pets and shelters. The platform must allow users to create a profile, view pets in the adoption queue. Shelters/NGOs can create a profile for the pets and carry out the adoption."_
+
+My main goal is to test my Java skills with Spring Boot 3. The [front-end](https://github.com/sucodelarangela/adopet) has already been provided and can be accessed through the link: https://adopet-tau.vercel.app/.
+
+[![GitHub issues](https://img.shields.io/github/issues/brenoliveira8/adopet)](https://github.com/brenoliveira8/adopet/issues)
+[![GitHub forks](https://img.shields.io/github/forks/brenoliveira8/adopet)](https://github.com/brenoliveira8/adopet/network)
+[![GitHub stars](https://img.shields.io/github/stars/brenoliveira8/adopet)](https://github.com/brenoliveira8/adopet/stargazers)
+
+### 📈 Project stages
+
+- **Week 1:** Development of CRUD routes for guardians, validation of provided information, and testing of routes with Postman.
+- **Week 2:** Development of CRUD routes for shelters and pets, validation of provided information, adoption process, and more route testing.
+- **Weeks 3 e 4:** Adding authentication and authorization functionality for certain actions, integration with the front-end, unit tests, integration tests, e2e tests, API deployment.
+
+### 🚀 Features
+
+- [x] CRUD for guardians
+- [x] CRUD for shelters
+- [x] CRUD for pets
+- [x] Pet adoption
+- [x] Authentication/Authorization
+- [ ] Unit tests 🚧 (in progress)
+- [ ] Integration tests
+- [ ] Front-end integration
+- [ ] Application deployment
+- [ ] e2e tests
+
+### 🛠️ Technologies
+
+- Java 17
+- Spring Boot 3
+- Maven
+- JUnit 5
+- Postman
+- GitFlow
+- Spring Security
+- Token JWT
+- Hibernate
+- Flyway
+- MySQL 8
+
+### 💻 How to run it
+
+1. Clone this repository `git clone https://github.com/brenoliveira8/adopet.git`
+
+2. Open the project in your preferred IDE
+
+3. Create the MySQL database `CREATE DATABASE adopet;`
+
+4. Configure the database credentials in the `application.yml` file
+
+5. Run the project `AdopetApplication.class`
+
+6. You can also run the tests with Postman on your machine, the Collection with the tests I performed is in the `Adopet.postman_collection` file
+
+### 🤝 Contribution
+
+Contributions are always welcome! Feel free to open an [issue](https://github.com/brenoliveira8/adopet/issues) or submit a [pull request](https://github.com/brenoliveira8/adopet/pulls).
+
+### 📄 License
+
+This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+Made By Breno Mascarenhas 🤓.
