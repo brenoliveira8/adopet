@@ -13,8 +13,8 @@ public record PetDetailsDTO(
         Boolean adopted,
         String age,
         String photo
-) implements ReturnInformationDTO {
-    public PetDetailsDTO(Pet pet) {
-        this(pet.getId(),pet.getShelter().getId(), pet.getName(), pet.getSize(), pet.getBehavior(), pet.getAdopted(), pet.getAge(), pet.getPhoto());
+) implements ReturnInformationDTO{
+    public PetDetailsDTO(Pet pet){
+        this(pet.getId(), pet.getShelter().getId(), pet.getName(), pet.getSize(), pet.getBehavior(), pet.getAdopted(), pet.getAge(), pet.getPhoto());
     }
 }

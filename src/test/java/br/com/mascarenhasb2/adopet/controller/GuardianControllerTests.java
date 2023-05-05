@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
-class GuardianControllerTests {
+class GuardianControllerTests{
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -49,9 +49,9 @@ class GuardianControllerTests {
     private JacksonTester<ErrorDTO> errorJson;
 
     @Test
-    @DisplayName ("Should return HTTP 200 and the data of the guardian when the guardian object was found by calling the readById(id) method")
+    @DisplayName("Should return HTTP 200 and the data of the guardian when the guardian object was found by calling the readById(id) method")
     @WithMockUser(roles = "ADMIN")
-    void testReadByIdWhenIdIsValidAndGuardianExists() throws Exception {
+    void testReadByIdWhenIdIsValidAndGuardianExists() throws Exception{
         var guardian = createOneGuardian();
         var expectedJson = createExpectedJsonWhenReadByIdIsSuccessful(guardian);
 
@@ -62,7 +62,7 @@ class GuardianControllerTests {
         assertThat(response.getContentAsString(Charset.defaultCharset())).isEqualTo(expectedJson);
     }
 
-    private Guardian createOneGuardian() {
+    private Guardian createOneGuardian(){
         return new Guardian(
                 1L,
                 "Breno Mascarenhas Oliveira",
@@ -79,7 +79,7 @@ class GuardianControllerTests {
         );
     }
 
-    private String createExpectedJsonWhenReadByIdIsSuccessful(Guardian guardian) throws IOException {
+    private String createExpectedJsonWhenReadByIdIsSuccessful(Guardian guardian) throws IOException{
         var expectedResponse = new SingleResponseDTO(
                 String.valueOf(HttpStatus.OK.value()),
                 "Operação realizada com sucesso!",
@@ -90,7 +90,7 @@ class GuardianControllerTests {
         ).getJson();
     }
 
-    private MockHttpServletResponse simulateGetRequest(String idTested) throws Exception {
+    private MockHttpServletResponse simulateGetRequest(String idTested) throws Exception{
         return mvc.perform(get("/tutores" + idTested))
                 .andReturn()
                 .getResponse();
@@ -99,7 +99,7 @@ class GuardianControllerTests {
     @Test
     @DisplayName("Should return HTTP 404 and empty body when the guardian was not found by calling the readById(id) method")
     @WithMockUser(roles = "ADMIN")
-    void testReadByIdWhenIdIsValidAndGuardianWasNotFound() throws Exception {
+    void testReadByIdWhenIdIsValidAndGuardianWasNotFound() throws Exception{
         when(guardianRepository.getReferenceById(any())).thenThrow(EntityNotFoundException.class);
         var response = simulateGetRequest("/1");
 
@@ -110,14 +110,15 @@ class GuardianControllerTests {
     @Test
     @DisplayName("Should return HTTP 400 and a message in the body when the argument is invalid by calling the readById(id) method")
     @WithMockUser(roles = "ADMIN")
-    void testReadByIdWhenIdIsInvalid() throws Exception {
+    void testReadByIdWhenIdIsInvalid() throws Exception{
         var response = simulateGetRequest("/a");
         var expectedErrorJson = createExpectedJsonWhenIdIsInvalid();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(response.getContentAsString(Charset.defaultCharset())).isEqualTo(expectedErrorJson);
     }
-    private String createExpectedJsonWhenIdIsInvalid() throws IOException {
+
+    private String createExpectedJsonWhenIdIsInvalid() throws IOException{
         var expectedResponse = new ErrorDTO(
                 String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 "id passed is invalid."
@@ -130,7 +131,7 @@ class GuardianControllerTests {
     @Test
     @DisplayName("Should return HTTP 200 when at least one guardian exists while calling the read() method")
     @WithMockUser(roles = "ADMIN")
-    void testReadWhenDataExists() throws Exception {
+    void testReadWhenDataExists() throws Exception{
         var guardians = createListOfGuardians();
         String expectedJson = createExpectedJsonWhenReadIsSuccessful(guardians);
 
@@ -140,9 +141,10 @@ class GuardianControllerTests {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentAsString(Charset.defaultCharset())).isEqualTo(expectedJson);
     }
-    private String createExpectedJsonWhenReadIsSuccessful(List<Guardian> guardians) throws IOException {
+
+    private String createExpectedJsonWhenReadIsSuccessful(List<Guardian> guardians) throws IOException{
         var expectedResponse = new ListResponseDTO(
-                String.valueOf( HttpStatus.OK.value()),
+                String.valueOf(HttpStatus.OK.value()),
                 "Consulta realizada com sucesso!",
                 guardians.stream().map(GuardianDetailsDTO::new).toList()
         );
@@ -151,7 +153,7 @@ class GuardianControllerTests {
         ).getJson();
     }
 
-    List<Guardian> createListOfGuardians() {
+    List<Guardian> createListOfGuardians(){
         var guardian1 = new Guardian(
                 1L,
                 "Breno Mascarenhas Oliveira",
@@ -190,7 +192,7 @@ class GuardianControllerTests {
     @Test
     @DisplayName("Should return HTTP 404 when it has no guardian while calling the read() method")
     @WithMockUser(roles = "ADMIN")
-    void testReadWhenItHasNoGuardian() throws Exception {
+    void testReadWhenItHasNoGuardian() throws Exception{
         List<Guardian> guardians = Collections.emptyList();
 
         when(guardianRepository.findAll()).thenReturn(guardians);

@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User implements UserDetails {
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,40 +28,47 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    public User(String email, String encodedPassword, Role role) {
+
+    public User(String email, String encodedPassword, Role role){
         this.email = email;
         this.password = encodedPassword;
         this.role = role;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities(){
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
         return authorities;
     }
+
     @Override
-    public String getPassword() {
+    public String getPassword(){
         return password;
     }
+
     @Override
-    public String getUsername() {
+    public String getUsername(){
         return email;
     }
+
     @Override
-    public boolean isAccountNonExpired() {
+    public boolean isAccountNonExpired(){
         return true;
     }
+
     @Override
-    public boolean isAccountNonLocked() {
+    public boolean isAccountNonLocked(){
         return true;
     }
+
     @Override
-    public boolean isCredentialsNonExpired() {
+    public boolean isCredentialsNonExpired(){
         return true;
     }
+
     @Override
-    public boolean isEnabled() {
+    public boolean isEnabled(){
         return true;
     }
 }

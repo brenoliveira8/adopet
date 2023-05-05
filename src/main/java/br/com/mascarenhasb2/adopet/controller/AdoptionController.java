@@ -16,10 +16,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("adocao")
-public class AdoptionController {
+public class AdoptionController{
 
     @Autowired
     private AdoptionService adoptionService;
+
     @PostMapping
     @Transactional
     public ResponseEntity<SingleResponseDTO> create(@RequestBody @Valid AdoptionCreationDTO adoptionCreationDTO, UriComponentsBuilder uriBuilder){
@@ -27,12 +28,12 @@ public class AdoptionController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ListResponseDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"})Pageable pageable) {
+    public ResponseEntity<Page<ListResponseDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"}) Pageable pageable){
         return adoptionService.readAllAdoptionsPaginated(pageable);
     }
 
-    @GetMapping ("/{id}")
-    public ResponseEntity<SingleResponseDTO> readById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<SingleResponseDTO> readById(@PathVariable Long id){
         return adoptionService.readAdoptionById(id);
     }
 

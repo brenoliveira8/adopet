@@ -13,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "name", "city"})
-public class Guardian {
+public class Guardian{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +26,8 @@ public class Guardian {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-    public Guardian(GuardianCreationDTO newGuardian, User user) {
+
+    public Guardian(GuardianCreationDTO newGuardian, User user){
         this.name = newGuardian.name();
         this.phone = newGuardian.phone();
         this.city = newGuardian.city();
@@ -34,7 +35,8 @@ public class Guardian {
         this.photo = newGuardian.photo();
         this.user = user;
     }
-    public void updateInformation(GuardianUpdateDTO newInformation) {
+
+    public void updateInformation(GuardianUpdateDTO newInformation){
         this.name = newInformation.name() != null ? newInformation.name() : this.name;
         this.phone = newInformation.phone() != null ? newInformation.phone() : this.phone;
         this.city = newInformation.city() != null ? newInformation.city() : this.city;

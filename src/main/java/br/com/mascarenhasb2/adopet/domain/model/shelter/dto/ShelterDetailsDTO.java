@@ -9,7 +9,7 @@ public record ShelterDetailsDTO(
         String name,
         String phone,
         Address address
-) implements ReturnInformationDTO {
+) implements ReturnInformationDTO{
     public ShelterDetailsDTO(Shelter shelter){
         this(shelter.getId(), shelter.getName(), shelter.getPhone(), shelter.getAddress());
     }

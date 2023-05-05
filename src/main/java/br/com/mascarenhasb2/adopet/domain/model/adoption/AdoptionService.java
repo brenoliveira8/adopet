@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Collections;
 
 @Service
-public class AdoptionService {
+public class AdoptionService{
     @Autowired
     private GuardianRepository guardianRepository;
     @Autowired
@@ -30,27 +30,27 @@ public class AdoptionService {
     @Autowired
     private AdoptionRepository adoptionRepository;
 
-    public ResponseEntity<SingleResponseDTO> createAdoption(AdoptionCreationDTO adoptionCreationDTO, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<SingleResponseDTO> createAdoption(AdoptionCreationDTO adoptionCreationDTO, UriComponentsBuilder uriBuilder){
         try{
             var guardian = guardianRepository.getReferenceById(adoptionCreationDTO.guardianId());
             var pet = petRepository.getReferenceById(adoptionCreationDTO.petId());
-            if (Boolean.TRUE.equals(pet.getAdopted())){
+            if(Boolean.TRUE.equals(pet.getAdopted())){
                 throw new PetAlreadyAdoptedException("Pet já foi adotado.");
             }
             Adoption adoption = new Adoption(guardian, pet);
             pet.adopt(Boolean.TRUE);
             adoptionRepository.save(adoption);
-            var uri = URIUtil.createCreatedEntityURI("adocao",adoption.getId(),uriBuilder);
+            var uri = URIUtil.createCreatedEntityURI("adocao", adoption.getId(), uriBuilder);
 
             return ResponseEntity.created(uri).body(createSingleResponseDTO(HttpStatus.CREATED, adoption));
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    public ResponseEntity<Page<ListResponseDTO>> readAllAdoptionsPaginated(Pageable pageable) {
+    public ResponseEntity<Page<ListResponseDTO>> readAllAdoptionsPaginated(Pageable pageable){
         var adoptions = adoptionRepository.findAll(pageable);
-        if (adoptions.isEmpty()) {
+        if(adoptions.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
@@ -63,16 +63,16 @@ public class AdoptionService {
         return ResponseEntity.ok(new PageImpl<>(Collections.singletonList(listOfAdoptions), pageable, adoptions.getTotalElements()));
     }
 
-    public ResponseEntity<SingleResponseDTO> readAdoptionById(Long id) {
-        try {
+    public ResponseEntity<SingleResponseDTO> readAdoptionById(Long id){
+        try{
             var adoption = adoptionRepository.getReferenceById(id);
             return ResponseEntity.ok(createSingleResponseDTO(HttpStatus.OK, adoption));
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    public ResponseEntity<SingleResponseDTO> deleteById(Long id) {
+    public ResponseEntity<SingleResponseDTO> deleteById(Long id){
         try{
             var adoption = adoptionRepository.getReferenceById(id);
             var pet = petRepository.getReferenceById(adoption.getPet().getId());
@@ -80,12 +80,12 @@ public class AdoptionService {
 
             adoptionRepository.delete(adoption);
             return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    private SingleResponseDTO createSingleResponseDTO(HttpStatus status, Adoption adoption) {
+    private SingleResponseDTO createSingleResponseDTO(HttpStatus status, Adoption adoption){
         return new SingleResponseDTO(
                 String.valueOf(status.value()),
                 "Operação realizada com sucesso!",

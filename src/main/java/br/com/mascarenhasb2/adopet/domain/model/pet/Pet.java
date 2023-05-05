@@ -9,27 +9,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity (name = "Pet")
-@Table (name = "pets")
+@Entity(name = "Pet")
+@Table(name = "pets")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString (of = {"id", "name", "behavior"})
-public class Pet {
+@ToString(of = {"id", "name", "behavior"})
+public class Pet{
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String age;
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private PetSize size;
     private String behavior;
     private Boolean adopted;
     private String photo;
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn (name = "shelter_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
     private Shelter shelter;
-    public Pet(PetCreationDTO newPet, Shelter shelter) {
+
+    public Pet(PetCreationDTO newPet, Shelter shelter){
         this.name = newPet.name();
         this.age = newPet.age();
         this.size = newPet.size();
@@ -38,7 +39,8 @@ public class Pet {
         this.photo = newPet.photo();
         this.shelter = shelter;
     }
-    public void updateInformation(PetUpdateDTO pet) {
+
+    public void updateInformation(PetUpdateDTO pet){
         this.name = (pet.name() != null) ? pet.name() : this.name;
         this.age = (pet.age() != null) ? pet.age() : this.age;
         this.size = (pet.size() != null) ? pet.size() : this.size;
@@ -46,7 +48,8 @@ public class Pet {
         this.adopted = (pet.adopted() != null) ? pet.adopted() : this.adopted;
         this.photo = (pet.photo() != null) ? pet.photo() : this.photo;
     }
-    public void adopt(Boolean newState) {
+
+    public void adopt(Boolean newState){
         this.adopted = newState;
     }
 }

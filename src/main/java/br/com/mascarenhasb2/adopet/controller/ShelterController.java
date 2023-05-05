@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("abrigos")
-public class ShelterController {
+public class ShelterController{
     @Autowired
     private ShelterService shelterService;
 

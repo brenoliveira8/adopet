@@ -10,7 +10,7 @@ public record GuardianDetailsDTO(
         String city,
         String about,
         String photo
-) implements ReturnInformationDTO {
+) implements ReturnInformationDTO{
 
     public GuardianDetailsDTO(Guardian guardian){
         this(guardian.getId(), guardian.getName(), guardian.getPhone(), guardian.getCity(), guardian.getAbout(), guardian.getPhoto());

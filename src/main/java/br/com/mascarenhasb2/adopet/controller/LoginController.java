@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("login")
-public class LoginController {
+public class LoginController{
     @Autowired
     private AuthenticationManager manager;
     @Autowired
@@ -27,12 +27,12 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<JwtTokenDTO> login(@RequestBody @Valid UserDTO userDTO){
         var authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.email(), userDTO.password());
-        try {
+        try{
             var authentication = manager.authenticate(authenticationToken);
             var jwtToken = tokenService.generateToken((User) authentication.getPrincipal());
 
             return ResponseEntity.ok(new JwtTokenDTO(jwtToken));
-        } catch (AuthenticationException exception){
+        }catch(AuthenticationException exception){
             throw new ValidationException();
         }
     }

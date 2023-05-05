@@ -20,5 +20,5 @@ public record AddressDTO(
         @Pattern(regexp = "[A-Z]{2}")
         String state,
         String complement
-) {
+){
 }

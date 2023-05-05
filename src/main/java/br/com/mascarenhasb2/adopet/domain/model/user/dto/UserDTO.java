@@ -9,5 +9,5 @@ public record UserDTO(
         String email,
         @NotBlank
         String password
-) {
+){
 }

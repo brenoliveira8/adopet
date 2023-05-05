@@ -15,13 +15,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-public class TokenService {
+public class TokenService{
 
-    @Value ("${spring.api.security.token.secret}")
+    @Value("${spring.api.security.token.secret}")
     private String secret;
 
-    public String generateToken(User user) {
-        try {
+    public String generateToken(User user){
+        try{
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("Adopet API")
@@ -29,26 +29,27 @@ public class TokenService {
                     .withExpiresAt(expireDate())
                     .withClaim("role", String.valueOf(user.getRole()))
                     .sign(algorithm);
-        } catch (JWTCreationException exception) {
+        }catch(JWTCreationException exception){
             throw new JWTCreationException("Erro gerando o Token", exception);
         }
     }
 
     public String getSubject(String jwtToken){
-        try {
+        try{
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
                     .withIssuer("Adopet API")
                     .build()
                     .verify(jwtToken)
                     .getSubject();
-        } catch (TokenExpiredException exception) {
+        }catch(TokenExpiredException exception){
             throw new InvalidJwtTokenException("Token expirado.");
-        } catch (JWTVerificationException exception) {
+        }catch(JWTVerificationException exception){
             throw new InvalidJwtTokenException("Token inválido");
         }
     }
-    private Instant expireDate() {
+
+    private Instant expireDate(){
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 

@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("tutores")
-public class GuardianController {
+public class GuardianController{
     @Autowired
     private GuardianService guardianService;
 

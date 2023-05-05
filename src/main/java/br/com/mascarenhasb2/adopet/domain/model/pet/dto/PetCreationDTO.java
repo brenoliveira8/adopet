@@ -17,5 +17,5 @@ public record PetCreationDTO(
         String photo,
         @NotNull
         Long shelterId
-) {
+){
 }

@@ -10,16 +10,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity (name = "Shelter")
-@Table (name = "shelters")
+@Entity(name = "Shelter")
+@Table(name = "shelters")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString (of = {"id", "name"})
-public class Shelter {
+@ToString(of = {"id", "name"})
+public class Shelter{
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String phone;
@@ -30,13 +30,14 @@ public class Shelter {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Shelter(ShelterCreationDTO newShelter, User user) {
+    public Shelter(ShelterCreationDTO newShelter, User user){
         this.name = newShelter.name();
         this.phone = newShelter.phone();
         this.address = new Address(newShelter.address());
         this.user = user;
     }
-    public void updateInformation(ShelterUpdateDTO shelter) {
+
+    public void updateInformation(ShelterUpdateDTO shelter){
         this.name = (shelter.name() != null) ? shelter.name() : this.name;
         this.phone = (shelter.phone() != null) ? shelter.phone() : this.phone;
         if(shelter.address() != null)

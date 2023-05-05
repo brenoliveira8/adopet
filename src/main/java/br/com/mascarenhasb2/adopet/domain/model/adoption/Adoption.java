@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Adoption {
+public class Adoption{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -26,7 +26,8 @@ public class Adoption {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
     private Pet pet;
-    public Adoption(Guardian guardian, Pet pet) {
+
+    public Adoption(Guardian guardian, Pet pet){
         this.adoptionDate = LocalDateTime.now();
         this.guardian = guardian;
         this.pet = pet;

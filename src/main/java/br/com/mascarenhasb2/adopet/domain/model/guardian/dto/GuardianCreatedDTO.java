@@ -8,7 +8,7 @@ public record GuardianCreatedDTO(
         String name,
         String phone,
         String city
-) implements ReturnInformationDTO {
+) implements ReturnInformationDTO{
     public GuardianCreatedDTO(Guardian guardian){
         this(guardian.getId(), guardian.getName(), guardian.getPhone(), guardian.getCity());
     }

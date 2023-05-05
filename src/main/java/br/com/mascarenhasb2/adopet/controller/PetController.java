@@ -16,37 +16,37 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping ("pets")
-public class PetController {
+@RequestMapping("pets")
+public class PetController{
 
     @Autowired
     private PetService petService;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<SingleResponseDTO> create(@RequestBody @Valid PetCreationDTO petCreationDTO, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<SingleResponseDTO> create(@RequestBody @Valid PetCreationDTO petCreationDTO, UriComponentsBuilder uriBuilder){
         return petService.createPet(petCreationDTO, uriBuilder);
     }
 
     @GetMapping
-    public ResponseEntity<Page<ListResponseDTO>> read(@PageableDefault (size = 10, page = 0, sort = {"id"}) Pageable pageable) {
+    public ResponseEntity<Page<ListResponseDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"}) Pageable pageable){
         return petService.readAllPetsNonAdoptedPetsPaginated(pageable);
     }
 
-    @GetMapping ("/{id}")
-    public ResponseEntity<SingleResponseDTO> readById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<SingleResponseDTO> readById(@PathVariable Long id){
         return petService.readPetById(id);
     }
 
-    @RequestMapping (method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
     @Transactional
-    public ResponseEntity<SingleResponseDTO> update(@RequestBody @Valid PetUpdateDTO petUpdateDTO) {
+    public ResponseEntity<SingleResponseDTO> update(@RequestBody @Valid PetUpdateDTO petUpdateDTO){
         return petService.updatePet(petUpdateDTO);
     }
 
-    @DeleteMapping ("/{id}")
+    @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<SingleResponseDTO> delete(@PathVariable Long id) {
+    public ResponseEntity<SingleResponseDTO> delete(@PathVariable Long id){
         return petService.deleteById(id);
     }
 

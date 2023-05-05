@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
-public class GuardianService {
+public class GuardianService{
     @Autowired
     private GuardianRepository guardianRepository;
     @Autowired
@@ -52,14 +52,15 @@ public class GuardianService {
 
         return ResponseEntity.created(uri).body(createdGuardianDTO);
     }
-    public ResponseEntity<ListResponseDTO> readAllGuardians() {
+
+    public ResponseEntity<ListResponseDTO> readAllGuardians(){
         var guardians = guardianRepository.findAll();
-        if (guardians.isEmpty()){
+        if(guardians.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
         var listOfGuardians = new ListResponseDTO(
-                String.valueOf( HttpStatus.OK.value()),
+                String.valueOf(HttpStatus.OK.value()),
                 "Consulta realizada com sucesso!",
                 guardians.stream().map(GuardianDetailsDTO::new).toList()
         );
@@ -71,7 +72,7 @@ public class GuardianService {
         try{
             var guardian = guardianRepository.getReferenceById(id);
             return ResponseEntity.ok(createSingleResponseDTO(guardian));
-        }catch (EntityNotFoundException exception){
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
@@ -81,13 +82,13 @@ public class GuardianService {
             var guardian = guardianRepository.getReferenceById(guardianUpdateDTO.id());
             guardian.updateInformation(guardianUpdateDTO);
             return ResponseEntity.ok(createSingleResponseDTO(guardian));
-        }catch (EntityNotFoundException exception){
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
     public ResponseEntity<SingleResponseDTO> deleteById(Long id){
-        if(guardianRepository.existsById(id)) {
+        if(guardianRepository.existsById(id)){
             guardianRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }

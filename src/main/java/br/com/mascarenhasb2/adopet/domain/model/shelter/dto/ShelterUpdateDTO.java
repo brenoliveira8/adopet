@@ -11,5 +11,5 @@ public record ShelterUpdateDTO(
         String phone,
         @Embedded
         AddressUpdateDTO address
-) {
+){
 }

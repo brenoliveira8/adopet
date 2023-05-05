@@ -14,5 +14,5 @@ public record ShelterCreationDTO(
         AddressDTO address,
         @Valid
         UserDTO user
-) {
+){
 }

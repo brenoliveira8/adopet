@@ -21,28 +21,28 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Collections;
 
 @Service
-public class PetService {
+public class PetService{
     @Autowired
     private ShelterRepository shelterRepository;
     @Autowired
     private PetRepository petRepository;
 
-    public ResponseEntity<SingleResponseDTO> createPet(PetCreationDTO petCreationDTO, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<SingleResponseDTO> createPet(PetCreationDTO petCreationDTO, UriComponentsBuilder uriBuilder){
         try{
             var shelter = shelterRepository.getReferenceById(petCreationDTO.shelterId());
             Pet pet = new Pet(petCreationDTO, shelter);
             petRepository.save(pet);
-            var uri = URIUtil.createCreatedEntityURI("pets",pet.getId(),uriBuilder);
+            var uri = URIUtil.createCreatedEntityURI("pets", pet.getId(), uriBuilder);
 
             return ResponseEntity.created(uri).body(createSingleResponseDTO(HttpStatus.CREATED, pet));
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    public ResponseEntity<Page<ListResponseDTO>> readAllPetsNonAdoptedPetsPaginated(Pageable pageable) {
+    public ResponseEntity<Page<ListResponseDTO>> readAllPetsNonAdoptedPetsPaginated(Pageable pageable){
         var pets = petRepository.findAllByAdoptedFalse(pageable);
-        if (pets.isEmpty()) {
+        if(pets.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
@@ -55,34 +55,34 @@ public class PetService {
         return ResponseEntity.ok(new PageImpl<>(Collections.singletonList(listOfPets), pageable, pets.getTotalElements()));
     }
 
-    public ResponseEntity<SingleResponseDTO> readPetById(Long id) {
-        try {
+    public ResponseEntity<SingleResponseDTO> readPetById(Long id){
+        try{
             var pet = petRepository.getReferenceById(id);
             return ResponseEntity.ok(createSingleResponseDTO(HttpStatus.OK, pet));
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    public ResponseEntity<SingleResponseDTO> updatePet(PetUpdateDTO petUpdateDTO) {
-        try {
+    public ResponseEntity<SingleResponseDTO> updatePet(PetUpdateDTO petUpdateDTO){
+        try{
             var pet = petRepository.getReferenceById(petUpdateDTO.id());
             pet.updateInformation(petUpdateDTO);
             return ResponseEntity.ok(createSingleResponseDTO(HttpStatus.OK, pet));
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    public ResponseEntity<SingleResponseDTO> deleteById(Long id) {
-        if (petRepository.existsById(id)) {
+    public ResponseEntity<SingleResponseDTO> deleteById(Long id){
+        if(petRepository.existsById(id)){
             petRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }
         throw new EntityNotFoundException();
     }
 
-    private SingleResponseDTO createSingleResponseDTO(HttpStatus status, Pet pet) {
+    private SingleResponseDTO createSingleResponseDTO(HttpStatus status, Pet pet){
         return new SingleResponseDTO(
                 String.valueOf(status.value()),
                 "Operação realizada com sucesso!",

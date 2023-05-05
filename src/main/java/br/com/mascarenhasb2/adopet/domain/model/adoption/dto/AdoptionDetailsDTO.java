@@ -16,10 +16,10 @@ public record AdoptionDetailsDTO(
         @JsonProperty("animal")
         String pet,
         @JsonProperty("data")
-        @JsonFormat (pattern = "dd/MM/yyyy - HH:mm")
+        @JsonFormat(pattern = "dd/MM/yyyy - HH:mm")
         LocalDateTime adoptionDate
-) implements ReturnInformationDTO {
-    public AdoptionDetailsDTO(Adoption adoption) {
+) implements ReturnInformationDTO{
+    public AdoptionDetailsDTO(Adoption adoption){
         this(adoption.getId(), adoption.getGuardian().getName(), adoption.getPet().getName(), adoption.getAdoptionDate());
     }
 }

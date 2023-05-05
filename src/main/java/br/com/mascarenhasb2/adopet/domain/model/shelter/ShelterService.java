@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
-public class ShelterService {
+public class ShelterService{
     @Autowired
     private ShelterRepository shelterRepository;
     @Autowired
@@ -28,7 +28,7 @@ public class ShelterService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<SingleResponseDTO> createShelter(ShelterCreationDTO shelterCreationDTO, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<SingleResponseDTO> createShelter(ShelterCreationDTO shelterCreationDTO, UriComponentsBuilder uriBuilder){
         EmailUtil.verifyIfExists(userRepository, shelterCreationDTO.user().email());
         String encodedPassword = passwordEncoder.encode(shelterCreationDTO.user().password());
 
@@ -42,9 +42,9 @@ public class ShelterService {
         return ResponseEntity.created(uri).body(createSingleResponseDTO(HttpStatus.CREATED, shelter));
     }
 
-    public ResponseEntity<ListResponseDTO> readAllShelters() {
+    public ResponseEntity<ListResponseDTO> readAllShelters(){
         var shelters = shelterRepository.findAll();
-        if (shelters.isEmpty()) {
+        if(shelters.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
@@ -57,34 +57,34 @@ public class ShelterService {
         return ResponseEntity.ok(listOfShelters);
     }
 
-    public ResponseEntity<SingleResponseDTO> readShelterById(Long id) {
-        try {
+    public ResponseEntity<SingleResponseDTO> readShelterById(Long id){
+        try{
             var shelter = shelterRepository.getReferenceById(id);
             return ResponseEntity.ok(createSingleResponseDTO(HttpStatus.OK, shelter));
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    public ResponseEntity<SingleResponseDTO> updateShelter(ShelterUpdateDTO shelterUpdateDTO) {
-        try {
+    public ResponseEntity<SingleResponseDTO> updateShelter(ShelterUpdateDTO shelterUpdateDTO){
+        try{
             var shelter = shelterRepository.getReferenceById(shelterUpdateDTO.id());
             shelter.updateInformation(shelterUpdateDTO);
             return ResponseEntity.ok(createSingleResponseDTO(HttpStatus.OK, shelter));
-        } catch (EntityNotFoundException exception) {
+        }catch(EntityNotFoundException exception){
             throw new EntityNotFoundException();
         }
     }
 
-    public ResponseEntity<SingleResponseDTO> deleteById(Long id) {
-        if (shelterRepository.existsById(id)) {
+    public ResponseEntity<SingleResponseDTO> deleteById(Long id){
+        if(shelterRepository.existsById(id)){
             shelterRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }
         throw new EntityNotFoundException();
     }
 
-    private SingleResponseDTO createSingleResponseDTO(HttpStatus status, Shelter shelter) {
+    private SingleResponseDTO createSingleResponseDTO(HttpStatus status, Shelter shelter){
         return new SingleResponseDTO(
                 String.valueOf(status.value()),
                 "Operação realizada com sucesso!",

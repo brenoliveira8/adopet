@@ -13,5 +13,5 @@ public record PetUpdateDTO(
         Boolean adopted,
         String age,
         String photo
-) {
+){
 }

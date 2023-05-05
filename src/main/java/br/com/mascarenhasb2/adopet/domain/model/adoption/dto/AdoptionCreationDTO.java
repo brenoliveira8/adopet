@@ -7,5 +7,5 @@ public record AdoptionCreationDTO(
         Long guardianId,
         @NotNull
         Long petId
-) {
+){
 }

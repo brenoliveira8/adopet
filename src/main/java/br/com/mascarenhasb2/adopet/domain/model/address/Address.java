@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class Address{
     private String street;
     private Integer number;
     private String neighborhood;
@@ -20,7 +20,7 @@ public class Address {
     private String state;
     private String complement;
 
-    public Address(AddressDTO newAddress) {
+    public Address(AddressDTO newAddress){
         this.street = newAddress.street();
         this.number = newAddress.number();
         this.neighborhood = newAddress.neighborhood();
@@ -29,7 +29,8 @@ public class Address {
         this.state = newAddress.state();
         this.complement = newAddress.complement();
     }
-    public void updateInformation(AddressUpdateDTO address) {
+
+    public void updateInformation(AddressUpdateDTO address){
         this.street = (address.street() != null) ? address.street() : this.street;
         this.number = (address.number() != null) ? address.number() : this.number;
         this.neighborhood = (address.neighborhood() != null) ? address.neighborhood() : this.neighborhood;
@@ -37,7 +38,6 @@ public class Address {
         this.city = (address.city() != null) ? address.city() : this.city;
         this.state = (address.state() != null) ? address.state() : this.state;
         this.complement = (address.complement() != null) ? address.complement() : this.complement;
-
 
     }
 }
