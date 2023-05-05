@@ -81,7 +81,7 @@ um [pull request](https://github.com/brenoliveira8/adopet/pulls).
 
 ### 📄 Documentação
 
-![](https://github.com/brenoliveira8/adopet/blob/main/adopet-documentaion.png?raw=true)
+![](https://github.com/brenoliveira8/adopet/blob/main/adopet-documentation.png?raw=true)
 
 Para acessar a documentação criada pelo Swagger:
 
@@ -197,7 +197,7 @@ a [pull request](https://github.com/brenoliveira8/adopet/pulls).
 
 ### 📄 Documentation
 
-![](https://github.com/brenoliveira8/adopet/blob/main/adopet-documentaion.png?raw=true)
+![](https://github.com/brenoliveira8/adopet/blob/main/adopet-documentation.png?raw=true)
 
 To access the documentation created by Swagger:
 
