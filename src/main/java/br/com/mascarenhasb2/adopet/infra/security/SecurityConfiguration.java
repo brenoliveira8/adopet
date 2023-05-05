@@ -25,6 +25,7 @@ public class SecurityConfiguration{
                 .requestMatchers(HttpMethod.POST, "/tutores").permitAll()
                 .requestMatchers(HttpMethod.POST, "/abrigos").permitAll()
                 .requestMatchers(request -> request.getMethod().equals("GET") && request.getServletPath().startsWith("/pets")).permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().hasAnyRole("SHELTER", "ADMIN")
                 .and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

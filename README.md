@@ -79,10 +79,42 @@ Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir
 uma [issue](https://github.com/brenoliveira8/adopet/issues) ou enviar
 um [pull request](https://github.com/brenoliveira8/adopet/pulls).
 
-### 📄 Licença
+### 📄 Documentação
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+![](https://github.com/brenoliveira8/adopet/blob/main/adopet-documentaion.png?raw=true)
 
+Para acessar a documentação criada pelo Swagger:
+
+1. Rode o projeto `AdopetApplication.class`
+
+2. Vá na seção `shelter-controller` e faça uma requisição `POST` com o Request body abaixo:
+```
+{
+    "name": "Abrigo",
+    "phone": "1199998888",
+    "address": {
+        "street": "Avenida Central",
+        "number": 10,
+        "neighborhood": "Centro",
+        "zipCode": "69414-521",
+        "city": "São Paulo",
+        "state": "SP",
+        "complement": "AP 102"
+    },
+    "user": {
+        "email": "abrigo@adopet.com",
+        "password": "abrigo"
+    }
+}
+```
+3. Vá na seção `login-controller` e faça uma requisição`POST` com o Request body abaixo:
+```
+{
+    "email": "abrigo@adopet.com",
+    "password": "abrigo"
+}
+```
+4. Copie o token gerado, clique em `Authorize` no início da página e cole o token.
 ---
 
 _English Version_
@@ -163,9 +195,42 @@ has already been provided and can be accessed through the link: https://adopet-t
 Contributions are always welcome! Feel free to open an [issue](https://github.com/brenoliveira8/adopet/issues) or submit
 a [pull request](https://github.com/brenoliveira8/adopet/pulls).
 
-### 📄 License
+### 📄 Documentation
 
-This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
+![](https://github.com/brenoliveira8/adopet/blob/main/adopet-documentaion.png?raw=true)
+
+To access the documentation created by Swagger:
+
+1. Run the `AdopetApplication.class` project
+
+2. Go to the `shelter-controller`  section and make a `POST` request with the following request body:
+```
+{
+    "name": "Abrigo",
+    "phone": "1199998888",
+    "address": {
+        "street": "Avenida Central",
+        "number": 10,
+        "neighborhood": "Centro",
+        "zipCode": "69414-521",
+        "city": "São Paulo",
+        "state": "SP",
+        "complement": "AP 102"
+    },
+    "user": {
+        "email": "abrigo@adopet.com",
+        "password": "abrigo"
+    }
+}
+```
+3. Go to the `login-controller`  section and make a `POST` request with the following request body:
+```
+{
+    "email": "abrigo@adopet.com",
+    "password": "abrigo"
+}
+```
+4. Copy the generated token, click on `Authorize` at the beginning of the page, and paste the token.
 
 ---
 

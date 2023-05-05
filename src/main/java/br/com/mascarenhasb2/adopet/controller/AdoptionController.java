@@ -4,6 +4,7 @@ import br.com.mascarenhasb2.adopet.domain.service.AdoptionService;
 import br.com.mascarenhasb2.adopet.domain.model.adoption.dto.AdoptionCreationDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("adocao")
+@SecurityRequirement(name = "bearer-key")
 public class AdoptionController{
 
     @Autowired
