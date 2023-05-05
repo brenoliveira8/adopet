@@ -11,12 +11,12 @@ import br.com.mascarenhasb2.adopet.domain.repository.UserRepository;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;
 import br.com.mascarenhasb2.adopet.util.EmailUtil;
-import br.com.mascarenhasb2.adopet.util.PasswordUtil;
 import br.com.mascarenhasb2.adopet.util.URIUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -26,11 +26,13 @@ public class GuardianService {
     private GuardianRepository guardianRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<SingleResponseDTO> createGuardian(GuardianCreationDTO guardianCreationDTO, UriComponentsBuilder uriBuilder){
         EmailUtil.verifyIfExists(userRepository, guardianCreationDTO.user().email());
 
-        String encodedPassword = PasswordUtil.encode(guardianCreationDTO.user().password());
+        String encodedPassword = passwordEncoder.encode(guardianCreationDTO.user().password());
 
         User user = new User(guardianCreationDTO.user().email(), encodedPassword, Role.GUARDIAN);
         userRepository.save(user);

@@ -10,12 +10,12 @@ import br.com.mascarenhasb2.adopet.domain.repository.UserRepository;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;
 import br.com.mascarenhasb2.adopet.util.EmailUtil;
-import br.com.mascarenhasb2.adopet.util.PasswordUtil;
 import br.com.mascarenhasb2.adopet.util.URIUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,10 +25,12 @@ public class ShelterService {
     private ShelterRepository shelterRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<SingleResponseDTO> createShelter(ShelterCreationDTO shelterCreationDTO, UriComponentsBuilder uriBuilder) {
         EmailUtil.verifyIfExists(userRepository, shelterCreationDTO.user().email());
-        String encodedPassword = PasswordUtil.encode(shelterCreationDTO.user().password());
+        String encodedPassword = passwordEncoder.encode(shelterCreationDTO.user().password());
 
         User user = new User(shelterCreationDTO.user().email(), encodedPassword, Role.SHELTER);
         userRepository.save(user);
