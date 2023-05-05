@@ -1,5 +1,6 @@
-package br.com.mascarenhasb2.adopet.domain.model.guardian;
+package br.com.mascarenhasb2.adopet.domain.service;
 
+import br.com.mascarenhasb2.adopet.domain.model.guardian.Guardian;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreatedDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianDetailsDTO;

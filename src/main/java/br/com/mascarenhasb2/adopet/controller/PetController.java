@@ -1,6 +1,6 @@
 package br.com.mascarenhasb2.adopet.controller;
 
-import br.com.mascarenhasb2.adopet.domain.model.pet.PetService;
+import br.com.mascarenhasb2.adopet.domain.service.PetService;
 import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetUpdateDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;

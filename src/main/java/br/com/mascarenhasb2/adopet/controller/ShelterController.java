@@ -1,6 +1,6 @@
 package br.com.mascarenhasb2.adopet.controller;
 
-import br.com.mascarenhasb2.adopet.domain.model.shelter.ShelterService;
+import br.com.mascarenhasb2.adopet.domain.service.ShelterService;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterUpdateDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;

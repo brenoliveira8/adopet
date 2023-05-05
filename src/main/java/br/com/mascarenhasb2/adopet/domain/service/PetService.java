@@ -1,5 +1,6 @@
-package br.com.mascarenhasb2.adopet.domain.model.pet;
+package br.com.mascarenhasb2.adopet.domain.service;
 
+import br.com.mascarenhasb2.adopet.domain.model.pet.Pet;
 import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.pet.dto.PetUpdateDTO;

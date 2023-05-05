@@ -1,6 +1,6 @@
 package br.com.mascarenhasb2.adopet.controller;
 
-import br.com.mascarenhasb2.adopet.domain.model.guardian.GuardianService;
+import br.com.mascarenhasb2.adopet.domain.service.GuardianService;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.guardian.dto.GuardianUpdateDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;

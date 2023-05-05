@@ -1,6 +1,6 @@
 package br.com.mascarenhasb2.adopet.controller;
 
-import br.com.mascarenhasb2.adopet.domain.model.adoption.AdoptionService;
+import br.com.mascarenhasb2.adopet.domain.service.AdoptionService;
 import br.com.mascarenhasb2.adopet.domain.model.adoption.dto.AdoptionCreationDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.ListResponseDTO;
 import br.com.mascarenhasb2.adopet.infra.exception.dto.SingleResponseDTO;

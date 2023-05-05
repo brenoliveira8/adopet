@@ -1,5 +1,6 @@
-package br.com.mascarenhasb2.adopet.domain.model.shelter;
+package br.com.mascarenhasb2.adopet.domain.service;
 
+import br.com.mascarenhasb2.adopet.domain.model.shelter.Shelter;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterCreationDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterDetailsDTO;
 import br.com.mascarenhasb2.adopet.domain.model.shelter.dto.ShelterUpdateDTO;
